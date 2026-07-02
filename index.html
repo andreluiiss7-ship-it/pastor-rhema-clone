@@ -15,12 +15,19 @@
 <meta name="description" content="Prepare sermons and study the Bible with clarity, depth, and structure — in minutes. Lifetime access.">
 
 <!-- Preconnect for video CDN -->
-<link rel="preconnect" href="https://cdn.converteai.net/" crossorigin>
-<link rel="preconnect" href="https://scripts.converteai.net/" crossorigin>
-<link rel="preconnect" href="https://images.converteai.net/">
+<link rel="preconnect" href="https://fast.wistia.com" crossorigin>
 
-<!-- vturb timing baseline -->
-<script>!function (i, n) { i._plt = i._plt || (n && n.timeOrigin ? n.timeOrigin + n.now() : Date.now()) }(window, performance);</script>
+<!-- Wistia VSL -->
+<script src="https://fast.wistia.com/player.js" async></script>
+<script src="https://fast.wistia.com/embed/119jh5f08w.js" async type="module"></script>
+<style>
+    wistia-player[media-id='119jh5f08w']:not(:defined) {
+        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/119jh5f08w/swatch');
+        display: block;
+        filter: blur(5px);
+        padding-top: 56.25%;
+    }
+</style>
 
 <style>
     :root {
@@ -698,7 +705,7 @@
         border: 0;
     }
 
-    .video vturb-smartplayer {
+    .video wistia-player {
         display: block;
         width: 100%;
     }
@@ -1114,7 +1121,7 @@
                 <div class="card soft" id="vsl" style="margin-top:14px">
                     <h2 style="margin:0 0 10px; font-size:18px;">I have a warning for you</h2>
                     <div class="video" style="aspect-ratio:auto;">
-                        <vturb-smartplayer id="vid-696a4f0b35c2a62b3c104a97" style="display: block; margin: 0 auto; width: 100%;"></vturb-smartplayer>
+                        <wistia-player media-id="119jh5f08w" aspect="1.7777777777777777"></wistia-player>
                     </div>
                     <p class="mini" style="margin-top:10px">Thousands of pastors and church leaders are already using
                         Pastor Rhema with satisfaction.</p>
@@ -1710,60 +1717,6 @@
             btn.style.color = '#1a73e8';
         }
 
-        /* Vturb gate: PerformanceObserver waits for the actual Facebook Pixel
-           request (facebook.com/tr) to fire before loading vturb scripts.
-           Hard timeout 5s — vturb still boots if pixel never fires (network failure). */
-        (function () {
-            var fired = false;
-
-            function loadVturb() {
-                if (fired) return;
-                fired = true;
-                [
-                    'https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js',
-                    'https://scripts.converteai.net/acebec9c-d57e-4576-a08b-c8a8828588b2/players/696a4f0b35c2a62b3c104a97/v4/player.js'
-                ].forEach(function (src) {
-                    var s = document.createElement('script');
-                    s.src = src;
-                    s.async = true;
-                    s.fetchPriority = 'low';
-                    document.head.appendChild(s);
-                });
-            }
-
-            function isPixelRequest(name) {
-                return name.indexOf('facebook.com/tr') !== -1;
-            }
-
-            try {
-                var existing = performance.getEntriesByType('resource');
-                for (var i = 0; i < existing.length; i++) {
-                    if (isPixelRequest(existing[i].name)) return loadVturb();
-                }
-            } catch (e) { /* noop */ }
-
-            if ('PerformanceObserver' in window) {
-                try {
-                    var po = new PerformanceObserver(function (list) {
-                        var entries = list.getEntries();
-                        for (var j = 0; j < entries.length; j++) {
-                            if (isPixelRequest(entries[j].name)) {
-                                po.disconnect();
-                                loadVturb();
-                                return;
-                            }
-                        }
-                    });
-                    po.observe({ type: 'resource', buffered: true });
-                } catch (e) {
-                    setTimeout(loadVturb, 3000);
-                }
-            } else {
-                setTimeout(loadVturb, 3000);
-            }
-
-            setTimeout(loadVturb, 5000);
-        })();
     </script>
 
     <!-- UTMify — UTM capture/attribution -->
